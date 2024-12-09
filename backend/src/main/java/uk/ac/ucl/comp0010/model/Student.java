@@ -205,6 +205,15 @@ public class Student {
   }
 
   /**
+   * Returns the list of registrations associated with this student.
+   *
+   * @return a list of Registration objects related to this student
+   */
+  public List<Registration> getRegistrations() {
+    return registrations;
+  }
+
+  /**
    * Returns a string representation of this student, including ID and basic
    * identifying information.
    * 
