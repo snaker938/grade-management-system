@@ -10,12 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
 
-	/**
-	 * Launches the application.
-	 * 
-	 * @param args command-line arguments
-	 */
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+  /**
+   * Launches the application.
+   * 
+   * @param args command-line arguments
+   */
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 }

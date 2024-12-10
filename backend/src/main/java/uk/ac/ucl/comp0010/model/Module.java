@@ -140,6 +140,7 @@ public class Module {
     if (grades == null || grades.isEmpty()) {
       throw new NoGradeAvailableException("No grades available for this module");
     }
+
     int sum = grades.stream().mapToInt(Grade::getScore).sum();
     return (float) sum / grades.size();
   }
