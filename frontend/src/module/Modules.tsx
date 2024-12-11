@@ -11,6 +11,7 @@ import {
   Card,
   CardContent,
   Divider,
+  Grid2,
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import AddIcon from '@mui/icons-material/Add';
@@ -27,34 +28,23 @@ import InspectModule from './InspectModule';
 import Navbar from '../components/Navbar';
 
 function Modules() {
-  // State to store the list of modules
   const [modules, setModules] = React.useState<EntityModelModule[]>([]);
-  // State to store the filtered list of modules based on search term
   const [filteredModules, setFilteredModules] = React.useState<
     EntityModelModule[]
   >([]);
-  // State to store any error messages
   const [error, setError] = React.useState<string>();
-  // State to store the search term
   const [searchTerm, setSearchTerm] = React.useState('');
-  // State to control the visibility of the Add Module modal
   const [showAddModal, setShowAddModal] = React.useState(false);
-  // State to control the visibility of the Edit Module modal
   const [showEditModal, setShowEditModal] = React.useState(false);
-  // State to store the selected module for editing
   const [selectedModule, setSelectedModule] =
     React.useState<EntityModelModule>();
-  // State to control the visibility of the Inspect Module modal
   const [showInspectModal, setShowInspectModal] = React.useState(false);
-  // State to store the module to be inspected
   const [inspectModule, setInspectModule] = React.useState<EntityModelModule>();
 
-  // Effect to fetch and update the list of modules when the component mounts
   React.useEffect(() => {
     updateModules();
   }, []);
 
-  // Function to filter the modules based on the search term
   const filterModules = React.useCallback(() => {
     const term = searchTerm.toLowerCase();
     const filtered = modules.filter(
@@ -65,12 +55,10 @@ function Modules() {
     setFilteredModules(filtered);
   }, [searchTerm, modules]);
 
-  // Effect to filter the modules whenever the search term or modules list changes
   React.useEffect(() => {
     filterModules();
   }, [searchTerm, modules, filterModules]);
 
-  // Function to fetch the list of modules from the API
   function updateModules() {
     axios
       .get(`${API_ENDPOINT}/modules`)
@@ -82,7 +70,6 @@ function Modules() {
       });
   }
 
-  // Function to handle the deletion of a module
   function handleDelete(m: EntityModelModule) {
     if (m.code) {
       axios
@@ -92,13 +79,11 @@ function Modules() {
     }
   }
 
-  // Function to handle the editing of a module
   function handleEdit(m: EntityModelModule) {
     setSelectedModule(m);
     setShowEditModal(true);
   }
 
-  // Function to handle the inspection of a module
   function handleInspect(m: EntityModelModule) {
     setInspectModule(m);
     setShowInspectModal(true);
@@ -108,7 +93,7 @@ function Modules() {
     <>
       <Navbar currentPage="modules" />
       <App>
-        <Container maxWidth="md" className="modules-container">
+        <Container maxWidth="md" className="modules-container" style={{paddingTop: '140px'}}>
           <Card className="modules-card" elevation={2}>
             <CardContent>
               <Typography variant="h4" gutterBottom className="modules-title">
@@ -118,9 +103,7 @@ function Modules() {
                 variant="body2"
                 sx={{ color: '#666', marginBottom: '30px', lineHeight: 1.5 }}
               >
-                Here you can view, search, add, update, and delete course
-                modules. You can also inspect a module to manage its enrolled
-                students, assign grades, and update its capacity.
+                Here you can view, search, add, update, and delete course modules. You can also inspect a module to manage its enrolled students, assign grades, and update its capacity.
               </Typography>
               {error && (
                 <Alert severity="error" sx={{ marginBottom: '20px' }}>
@@ -129,29 +112,33 @@ function Modules() {
               )}
 
               <div className="modules-actions">
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  placeholder="Search by code or name..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="search-field"
-                />
-                <IconButton
-                  onClick={updateModules}
-                  className="action-button"
-                  title="Refresh"
-                >
-                  <RefreshIcon />
-                </IconButton>
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => setShowAddModal(true)}
-                  className="action-button"
-                >
-                  Add New Module
-                </Button>
+                <div className="left-actions">
+                  <IconButton
+                    onClick={updateModules}
+                    className="action-button-icon"
+                    title="Refresh"
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                  <Button
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                    onClick={() => setShowAddModal(true)}
+                    className="action-button"
+                  >
+                    Add New Module
+                  </Button>
+                </div>
+                <div className="right-actions">
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    placeholder="Search by code or name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-field"
+                  />
+                </div>
               </div>
 
               <Divider sx={{ marginY: '30px' }} />
@@ -161,52 +148,43 @@ function Modules() {
               )}
 
               {filteredModules.length > 0 && (
-                <>
+                <div className="modules-list-container">
                   <Grid container className="modules-header-row">
                     <Grid item xs={2}>
                       Code
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={2}>
                       Name
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                       MNC
                     </Grid>
                     <Grid item xs={2}>
                       Enrolled/Max
                     </Grid>
-                    <Grid item xs={1} className="action-column">
-                      Inspect
-                    </Grid>
-                    <Grid item xs={1} className="action-column">
+                    <Grid item xs={2}>
                       Actions
                     </Grid>
+                    <Grid item xs={2}>
+                      Inspect
+                    </Grid>
                   </Grid>
-                  {filteredModules.map((m) => {
-                    return (
+                  <div className="modules-scrollable">
+                    {filteredModules.map((m) => (
                       <Grid container key={m.code} className="module-row">
                         <Grid item xs={2}>
                           {m.code}
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs={2}>
                           {m.name}
                         </Grid>
-                        <Grid item xs={1}>
+                        <Grid item xs={2}>
                           {m.mnc ? 'Yes' : 'No'}
                         </Grid>
                         <Grid item xs={2}>
                           {m.enrolledCount ?? 0}/{m.maxSeats ?? 0}
                         </Grid>
-                        <Grid item xs={1} className="action-column">
-                          <IconButton
-                            onClick={() => handleInspect(m)}
-                            title="Inspect"
-                            className="icon-btn"
-                          >
-                            <SearchIcon />
-                          </IconButton>
-                        </Grid>
-                        <Grid item xs={1} className="action-column">
+                        <Grid item xs={2} className="action-column">
                           <IconButton
                             onClick={() => handleEdit(m)}
                             title="Edit"
@@ -222,10 +200,19 @@ function Modules() {
                             <DeleteIcon />
                           </IconButton>
                         </Grid>
+                        <Grid item xs={2} className="action-column">
+                          <IconButton
+                            onClick={() => handleInspect(m)}
+                            title="Inspect"
+                            className="icon-btn"
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </Grid>
                       </Grid>
-                    );
-                  })}
-                </>
+                    ))}
+                  </div>
+                </div>
               )}
             </CardContent>
           </Card>
