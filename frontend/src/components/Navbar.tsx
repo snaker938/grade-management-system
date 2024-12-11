@@ -7,7 +7,6 @@ interface NavbarProps {
 function Navbar({ currentPage }: NavbarProps) {
   const isModules = currentPage === 'modules';
   const isStudents = currentPage === 'students';
-  const isGrades = currentPage === 'grades';
 
   return (
     <header className="navbar">
@@ -31,13 +30,6 @@ function Navbar({ currentPage }: NavbarProps) {
           ) : (
             <a href="/students" className="nav-link">
               Students
-            </a>
-          )}
-          {isGrades ? (
-            <span className="nav-link active">Grades</span>
-          ) : (
-            <a href="/grades" className="nav-link">
-              Grades
             </a>
           )}
         </nav>

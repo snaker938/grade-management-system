@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
-import GradingIcon from '@mui/icons-material/Grading';
 import './Home.css';
 import Navbar from './components/Navbar';
 
@@ -91,16 +90,6 @@ function Home() {
                   </IconButton>
                   <Typography variant="body2" className="feature-text">
                     Students
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Box className="feature-option">
-                  <IconButton href="/grades" className="feature-icon-button">
-                    <GradingIcon className="feature-icon" />
-                  </IconButton>
-                  <Typography variant="body2" className="feature-text">
-                    Grades
                   </Typography>
                 </Box>
               </Grid>

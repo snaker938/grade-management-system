@@ -7,8 +7,8 @@ import {
   EntityModelStudent,
   EntityModelModule,
 } from "../api/index";
-import { API_ENDPOINT } from "../config";
-import AddGrade from "./AddGrade";
+import { API_ENDPOINT } from "../config.ts";
+import AddGrade from "./AddGrade.tsx";
 
 function GradeRow(props: { grade: EntityModelGrade }) {
   const { grade } = props;
