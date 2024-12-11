@@ -28,7 +28,7 @@ import uk.ac.ucl.comp0010.repository.StudentRepository;
 @ActiveProfiles("test")
 @Transactional
 @DisplayName("Integration Tests")
-class FullIntegrationTest {
+public final class FullIntegrationTest {
 
   @Autowired
   private StudentRepository studentRepository;
@@ -46,7 +46,7 @@ class FullIntegrationTest {
    * Ensures a clean state before each test.
    */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
   }
 
   /**
@@ -54,7 +54,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Complete Workflow")
-  void testFullWorkflow() throws Exception {
+  public void testFullWorkflow() throws Exception {
     Student student = new Student();
     student.setId(1L);
     student.setFirstName("Alice");
@@ -113,7 +113,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Empty Database Scenario")
-  void testEmptyDatabaseScenario() {
+  public void testEmptyDatabaseScenario() {
     assertEquals(0, studentRepository.count());
     assertEquals(0, moduleRepository.count());
     assertEquals(0, registrationRepository.count());
@@ -125,7 +125,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Multiple Modules and Grades")
-  void testMultipleModulesAndGrades() throws Exception {
+  public void testMultipleModulesAndGrades() throws Exception {
     Student student = new Student();
     student.setId(3L);
     student.setFirstName("Carol");
@@ -185,7 +185,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Student with No Modules and No Grades")
-  void testStudentNoModulesNoGrades() {
+  public void testStudentNoModulesNoGrades() {
     Student student = new Student();
     student.setId(4L);
     student.setFirstName("Diana");
@@ -200,7 +200,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Module with Empty Code")
-  void testModuleWithEmptyCode() {
+  public void testModuleWithEmptyCode() {
     Module mod = new Module();
     mod.setCode("");
     mod.setName("Nameless Engineering");
@@ -216,7 +216,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Multiple Academic Years - No Grades")
-  void testMultipleAcademicYears() throws Exception {
+  public void testMultipleAcademicYears() throws Exception {
     Student student = new Student();
     student.setId(5L);
     student.setFirstName("Ethan");
@@ -242,7 +242,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Getting Grade from Null Module treated as unregistered")
-  void testGetGradeFromNullModule() throws Exception {
+  public void testGetGradeFromNullModule() throws Exception {
     Student student = new Student();
     student.setId(6L);
     student.setFirstName("Fred");
@@ -257,7 +257,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Module with No Registrations and No Grades")
-  void testModuleNoRegistrationsNoGrades() {
+  public void testModuleNoRegistrationsNoGrades() {
     Module lonelyModule = new Module();
     lonelyModule.setCode("LONELY");
     lonelyModule.setName("Lonely Module");
@@ -270,7 +270,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Add Negative Scores - Domain Treats Them as Invalid")
-  void testNegativeGradeScores() throws Exception {
+  public void testNegativeGradeScores() throws Exception {
     Student student = new Student();
     student.setId(7L);
     student.setFirstName("Greg");
@@ -303,7 +303,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("Try Getting Grade from Non-Registered Module")
-  void testGetGradeForDifferentModuleNotRegistered() throws Exception {
+  public void testGetGradeForDifferentModuleNotRegistered() throws Exception {
     Student student = new Student();
     student.setId(8L);
     student.setFirstName("Harry");
@@ -335,7 +335,7 @@ class FullIntegrationTest {
    */
   @Test
   @DisplayName("No Grades Even Though Registration Exists")
-  void testNoGradesButRegistered() throws Exception {
+  public void testNoGradesButRegistered() throws Exception {
     Student student = new Student();
     student.setId(9L);
     student.setFirstName("Irene");

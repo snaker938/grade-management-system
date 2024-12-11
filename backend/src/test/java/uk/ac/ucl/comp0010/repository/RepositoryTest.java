@@ -24,7 +24,7 @@ import uk.ac.ucl.comp0010.model.Student;
 @ActiveProfiles("test")
 @Transactional
 @DisplayName("Repository Tests")
-class RepositoryTest {
+public final class RepositoryTest {
 
   @Autowired
   StudentRepository studentRepository;
@@ -42,7 +42,7 @@ class RepositoryTest {
    * Ensures a clean state before each test.
    */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
   }
 
   /**
@@ -50,7 +50,7 @@ class RepositoryTest {
    */
   @Test
   @DisplayName("Context Loads and Repositories Are Not Null")
-  void contextLoads() {
+  public void contextLoads() {
     assertNotNull(studentRepository);
     assertNotNull(moduleRepository);
     assertNotNull(gradeRepository);
@@ -62,7 +62,7 @@ class RepositoryTest {
    */
   @Test
   @DisplayName("Student Repository CRUD Operations")
-  void testStudentCrud() {
+  public void testStudentCrud() {
     Student student = new Student();
     student.setId(10L);
     student.setFirstName("Test");
@@ -82,7 +82,7 @@ class RepositoryTest {
    */
   @Test
   @DisplayName("Module Repository CRUD Operations")
-  void testModuleCrud() {
+  public void testModuleCrud() {
     Module module = new Module();
     module.setCode("TESTMOD");
     module.setName("Test Module");
@@ -100,7 +100,7 @@ class RepositoryTest {
    */
   @Test
   @DisplayName("Registration Repository CRUD Operations")
-  void testRegistrationCrud() {
+  public void testRegistrationCrud() {
     Student student = new Student();
     student.setId(20L);
     student.setFirstName("Reg");
@@ -133,7 +133,7 @@ class RepositoryTest {
    */
   @Test
   @DisplayName("Grade Repository CRUD Operations")
-  void testGradeCrud() {
+  public void testGradeCrud() {
     Student student = new Student();
     student.setId(30L);
     student.setFirstName("Grade");

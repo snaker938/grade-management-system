@@ -22,7 +22,7 @@ import uk.ac.ucl.comp0010.exception.NoRegistrationException;
  * available.
  * - Computing the average grade for a student.
  */
-class StudentTest {
+public final class StudentTest {
 
   private Student student;
   private Module module1;
@@ -32,7 +32,7 @@ class StudentTest {
    * Sets up new Student and Module instances before each test.
    */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     student = new Student();
     module1 = new Module();
     module1.setCode("MOD001");
@@ -45,7 +45,7 @@ class StudentTest {
    */
   @Test
   @DisplayName("Should set and get all Student fields correctly")
-  void testSetAndGetFields() {
+  public void testSetAndGetFields() {
     student.setId(1L);
     student.setFirstName("Alice");
     student.setLastName("Smith");
@@ -68,7 +68,7 @@ class StudentTest {
    */
   @Test
   @DisplayName("Should register module, add grade, and retrieve that grade")
-  void testRegisterModuleAndAddGradeAndGetGrade() throws Exception {
+  public void testRegisterModuleAndAddGradeAndGetGrade() throws Exception {
     student.registerModule(module1);
 
     Grade g = new Grade();
@@ -92,7 +92,7 @@ class StudentTest {
    */
   @Test
   @DisplayName("Should throw NoRegistrationException if student is not registered in the module")
-  void testGetGradeNoRegistration() {
+  public void testGetGradeNoRegistration() {
     assertThrows(NoRegistrationException.class, () -> student.getGrade(module1),
         "Should throw NoRegistrationException when not registered in the module");
   }
@@ -106,7 +106,7 @@ class StudentTest {
    */
   @Test
   @DisplayName("Should throw NoGradeAvailableException if no grade is recorded for the module")
-  void testGetGradeNoGradeAvailable() throws Exception {
+  public void testGetGradeNoGradeAvailable() throws Exception {
     student.registerModule(module1);
     assertThrows(NoGradeAvailableException.class, () -> student.getGrade(module1),
         "Should throw NoGradeAvailableException when no grade is available");
@@ -119,7 +119,7 @@ class StudentTest {
    */
   @Test
   @DisplayName("Should compute average grade correctly")
-  void testComputeAverage() throws Exception {
+  public void testComputeAverage() throws Exception {
     student.registerModule(module1);
     Grade g1 = new Grade();
     g1.setScore(50);
@@ -145,7 +145,7 @@ class StudentTest {
    */
   @Test
   @DisplayName("Should throw NoGradeAvailableException if no grades are recorded when computing average")
-  void testComputeAverageNoGrades() {
+  public void testComputeAverageNoGrades() {
     assertThrows(NoGradeAvailableException.class, student::computeAverage,
         "Should throw NoGradeAvailableException when no grades are available");
   }

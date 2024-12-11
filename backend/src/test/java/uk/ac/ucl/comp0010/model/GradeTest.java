@@ -16,14 +16,9 @@ import org.junit.jupiter.api.Test;
  * - Setting and retrieving basic fields (id, score, academicYear).
  * - Associating a Grade with a specific Module.
  * - Ensuring that data is stored and retrieved consistently.
- *
- * Note:
- * - Computation of averages is handled by Student and Module classes, not here.
- * - Exceptions like NoGradeAvailableException or NoRegistrationException are
- * tested in StudentTest and ModuleTest where the logic that may cause them
- * resides.
+ * 
  */
-class GradeTest {
+public final class GradeTest {
 
   private Grade grade;
   private Module module;
@@ -32,7 +27,7 @@ class GradeTest {
    * Creates a new Grade and Module instance before each test.
    */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     grade = new Grade();
     module = new Module();
     module.setCode("MODTEST");
@@ -46,7 +41,7 @@ class GradeTest {
    */
   @Test
   @DisplayName("Should set and get all Grade fields correctly")
-  void testSetAndGetFields() {
+  public void testSetAndGetFields() {
     grade.setId(10L);
     grade.setScore(85);
     grade.setAcademicYear("2024/2025");
@@ -64,7 +59,7 @@ class GradeTest {
    */
   @Test
   @DisplayName("Should associate Grade with a Module correctly")
-  void testAssociateModule() {
+  public void testAssociateModule() {
     grade.setModule(module);
     assertAll("Module should be associated correctly",
         () -> assertNotNull(grade.getModule(), "Module reference should not be null"),
@@ -79,7 +74,7 @@ class GradeTest {
    */
   @Test
   @DisplayName("toString() should return a non-null string containing grade details")
-  void testToString() {
+  public void testToString() {
     grade.setId(10L);
     grade.setScore(85);
     grade.setAcademicYear("2024/2025");

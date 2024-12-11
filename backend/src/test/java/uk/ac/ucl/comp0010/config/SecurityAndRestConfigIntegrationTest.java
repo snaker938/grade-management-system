@@ -11,13 +11,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import uk.ac.ucl.comp0010.model.Student;
 import uk.ac.ucl.comp0010.repository.StudentRepository;
 
 /**
- * Integration tests verifying that security and REST configurations work as
- * intended.
+ * Integration tests verifying that security and REST configurations work as intended.
+ *
  * Ensures that:
  * - CORS settings allow requests from external origins.
  * - Entity IDs are exposed for repository endpoints.
@@ -26,11 +25,13 @@ import uk.ac.ucl.comp0010.repository.StudentRepository;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class SecurityAndRestConfigIntegrationTest {
+public final class SecurityAndRestConfigIntegrationTest {
 
+  /** Provides the ability to perform MVC requests in tests. */
   @Autowired
   private MockMvc mockMvc;
 
+  /** Repository for managing Student entities. */
   @Autowired
   private StudentRepository studentRepository;
 
@@ -38,17 +39,25 @@ class SecurityAndRestConfigIntegrationTest {
    * Ensures a clean state before each test by clearing repositories if necessary.
    */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     studentRepository.deleteAll();
   }
 
   /**
    * Verifies that the /students endpoint is accessible, that CORS headers are
-   * present when an Origin header is provided, and that entity IDs are * exposed.
+   * present when an Origin header is provided, and that entity IDs are exposed.
+   *
+   * This test:
+   * - Creates and saves a Student to ensure data is present.
+   * - Performs a GET request with an Origin header.
+   * - Checks that the response is OK, that CORS headers are included,
+   *   and that the student ID is exposed in the JSON response.
+   *
+   * @throws Exception if an MVC request or expectation fails
    */
   @Test
   @DisplayName("Verify Security and REST Config for /students")
-  void testStudentsEndpoint() throws Exception {
+  public void testStudentsEndpoint() throws Exception {
     // Create and save a student to ensure data exists
     Student s = new Student();
     s.setId(100L);

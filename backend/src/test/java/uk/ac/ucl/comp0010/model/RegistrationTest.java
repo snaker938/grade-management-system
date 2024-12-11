@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * - Associating a Registration with a Student.
  * - Associating a Registration with a Module.
  */
-class RegistrationTest {
+public final class RegistrationTest {
 
   private Registration registration;
   private Student student;
@@ -27,7 +27,7 @@ class RegistrationTest {
    * Sets up a new Registration, Student, and Module before each test.
    */
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     registration = new Registration();
 
     student = new Student();
@@ -48,7 +48,7 @@ class RegistrationTest {
    */
   @Test
   @DisplayName("Should set and get Registration ID correctly")
-  void testSetAndGetId() {
+  public void testSetAndGetId() {
     registration.setId(200L);
     assertEquals(200L, registration.getId(), "ID should be 200");
   }
@@ -58,7 +58,7 @@ class RegistrationTest {
    */
   @Test
   @DisplayName("Should associate Registration with a Student correctly")
-  void testAssociateStudent() {
+  public void testAssociateStudent() {
     registration.setStudent(student);
 
     assertAll("Student should be associated correctly",
@@ -76,7 +76,7 @@ class RegistrationTest {
    */
   @Test
   @DisplayName("Should associate Registration with a Module correctly")
-  void testAssociateModule() {
+  public void testAssociateModule() {
     registration.setModule(module);
 
     assertAll("Module should be associated correctly",

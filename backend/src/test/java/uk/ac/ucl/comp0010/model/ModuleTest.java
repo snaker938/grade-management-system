@@ -20,20 +20,15 @@ import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
  * - Computing the average grade of a module from a list of Grade objects.
  * - Ensuring that an exception is thrown when no grades are available.
  *
- * Note:
- * - The mnc field (Mandatory Non-Condonable) indicates that the module is
- * essential and cannot be overlooked.
- * - NoGradeAvailableException is thrown if there are no grades at all or if no
- * grade is available for the specific context.
  */
-class ModuleTest {
+public final class ModuleTest {
 
   /**
    * Tests that all fields of a Module can be set and retrieved correctly.
    */
   @Test
   @DisplayName("Should set and get all Module fields correctly")
-  void testSetAndGetFields() {
+  public void testSetAndGetFields() {
     Module module = new Module();
     module.setCode("MODX");
     module.setName("Engineering");
@@ -51,7 +46,7 @@ class ModuleTest {
    */
   @Test
   @DisplayName("Should compute the average grade correctly from a list of grades")
-  void testComputeAverageGrade() throws Exception {
+  public void testComputeAverageGrade() throws Exception {
     Module module = new Module();
     List<Grade> grades = new ArrayList<>();
 
@@ -74,7 +69,7 @@ class ModuleTest {
    */
   @Test
   @DisplayName("Should throw NoGradeAvailableException if no grades are provided")
-  void testComputeAverageGradeNoGrades() {
+  public void testComputeAverageGradeNoGrades() {
     Module module = new Module();
     assertThrows(NoGradeAvailableException.class, () -> module.computeAverageGrade(new ArrayList<>()),
         "Should throw NoGradeAvailableException when no grades are available");
