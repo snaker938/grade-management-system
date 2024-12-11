@@ -19,13 +19,14 @@ public class SecurityConfig {
   /**
    * Defines the security filter chain. Disables CSRF and applies
    * the configured CORS settings.
-   * 
+   *
    * @param http the HttpSecurity to configure
    * @return the SecurityFilterChain
    * @throws Exception if configuration fails
    */
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain filterChain(final HttpSecurity http)
+      throws Exception {
     http.csrf(csrf -> csrf.disable())
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
@@ -34,7 +35,7 @@ public class SecurityConfig {
 
   /**
    * Sets up a CORS configuration allowing all origins, headers, and methods.
-   * 
+   *
    * @return the CorsConfigurationSource applied to all endpoints
    */
   @Bean
@@ -45,7 +46,9 @@ public class SecurityConfig {
     config.setAllowedMethods(List.of("*"));
     config.setAllowCredentials(false);
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    UrlBasedCorsConfigurationSource source =
+      new UrlBasedCorsConfigurationSource();
+
     source.registerCorsConfiguration("/**", config);
     return source;
   }

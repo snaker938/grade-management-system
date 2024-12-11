@@ -10,28 +10,29 @@ import jakarta.persistence.ManyToOne;
  * Represents a registration linking a Student to a Module.
  *
  * A Registration:
- * - Associates a specific Student with a specific Module, indicating that the
- * Student is enrolled in that Module.
- * - Is used by the Student to record which Modules they are taking and by the
- * Module to keep track of which Students are enrolled.
+ * - Associates a specific Student with a specific Module, indicating
+ * that the Student is enrolled in that Module.
+ * - Used by the Student entity to record which Modules they are taking
+ * and by the Module entity to keep track of enrolled Students.
  *
  * Note:
- * - No exceptions are thrown directly from Registration as it serves as a
- * simple relationship
- * entity. Validations and exception handling (e.g., NoRegistrationException)
- * occur at the logic level in classes like Student or services that manage
- * these entities.
+ * - No exceptions are thrown directly from Registration. Validations
+ * and exception handling occur at the logic level (in Student or in
+ * services that manage these entities).
  */
 @Entity
-public class Registration {
+public final class Registration {
 
+  /** The unique identifier of this registration. */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /** The student associated with this registration. */
   @ManyToOne
   private Student student;
 
+  /** The module associated with this registration. */
   @ManyToOne
   private Module module;
 
@@ -47,10 +48,10 @@ public class Registration {
   /**
    * Sets the unique identifier of this registration.
    *
-   * @param id the new ID for this registration
+   * @param newId the new ID for this registration
    */
-  public void setId(Long id) {
-    this.id = id;
+  public void setId(final Long newId) {
+    this.id = newId;
   }
 
   /**
@@ -65,10 +66,10 @@ public class Registration {
   /**
    * Associates this registration with a specific student.
    *
-   * @param student the student to link to this registration
+   * @param newStudent the student to link to this registration
    */
-  public void setStudent(Student student) {
-    this.student = student;
+  public void setStudent(final Student newStudent) {
+    this.student = newStudent;
   }
 
   /**
@@ -83,15 +84,16 @@ public class Registration {
   /**
    * Associates this registration with a specific module.
    *
-   * @param module the module to link to this registration
+   * @param newModule the module to link to this registration
    */
-  public void setModule(Module module) {
-    this.module = module;
+  public void setModule(final Module newModule) {
+    this.module = newModule;
   }
 
   /**
-   * Returns a string representation of this registration, including its ID
-   * and references to the associated student and module.
+   * Returns a string representation of this registration,
+   * including its ID and references to the associated student
+   * and module.
    *
    * @return a string describing this registration
    */

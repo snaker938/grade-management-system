@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 /**
  * Represents a grade awarded to a student for a given module in a specific
  * academic year.
- * 
+ *
  * A Grade:
  * - Is associated with a particular Student and Module.
  * - Records the student's score for that module.
@@ -17,20 +17,27 @@ import jakarta.persistence.ManyToOne;
  *
  * Note:
  * - Average computation and exception handling related to no available grades
- * are handled in other classes (Student and Module), not directly within Grade.
+ * are handled in other classes (e.g., Student and Module), not directly here.
  */
 @Entity
-public class Grade {
+public final class Grade {
 
+  /** The unique identifier of this grade. */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  /** The score assigned to this grade. */
   private int score;
+
+  /** The academic year in which the grade was awarded. */
   private String academicYear;
 
+  /** The student who received this grade. */
   @ManyToOne
   private Student student;
 
+  /** The module for which this grade was awarded. */
   @ManyToOne
   private Module module;
 
@@ -46,10 +53,10 @@ public class Grade {
   /**
    * Sets the unique identifier of this grade.
    *
-   * @param id the new ID for this grade
+   * @param newId the new ID for this grade
    */
-  public void setId(Long id) {
-    this.id = id;
+  public void setId(final Long newId) {
+    this.id = newId;
   }
 
   /**
@@ -64,10 +71,10 @@ public class Grade {
   /**
    * Sets the score for this grade.
    *
-   * @param score the new score value
+   * @param newScore the new score value
    */
-  public void setScore(int score) {
-    this.score = score;
+  public void setScore(final int newScore) {
+    this.score = newScore;
   }
 
   /**
@@ -82,14 +89,14 @@ public class Grade {
   /**
    * Sets the academic year for this grade.
    *
-   * @param academicYear the academic year string (e.g., "2024/2025")
+   * @param newAcademicYear the academic year string (e.g., "2024/2025")
    */
-  public void setAcademicYear(String academicYear) {
-    this.academicYear = academicYear;
+  public void setAcademicYear(final String newAcademicYear) {
+    this.academicYear = newAcademicYear;
   }
 
   /**
-   * Returns the student to whom this grade belongs.
+   * Returns the student who received this grade.
    *
    * @return the associated Student
    */
@@ -100,10 +107,10 @@ public class Grade {
   /**
    * Associates this grade with a particular student.
    *
-   * @param student the student to link to this grade
+   * @param newStudent the student to link to this grade
    */
-  public void setStudent(Student student) {
-    this.student = student;
+  public void setStudent(final Student newStudent) {
+    this.student = newStudent;
   }
 
   /**
@@ -118,15 +125,15 @@ public class Grade {
   /**
    * Associates this grade with a particular module.
    *
-   * @param module the module to link to this grade
+   * @param newModule the module to link to this grade
    */
-  public void setModule(Module module) {
-    this.module = module;
+  public void setModule(final Module newModule) {
+    this.module = newModule;
   }
 
   /**
-   * Returns a string representation of this grade, including ID, score, academic
-   * year, and related module information.
+   * Returns a string representation of this grade, including ID, score,
+   * academic year, and related module information.
    *
    * @return a string describing this grade
    */
@@ -135,8 +142,9 @@ public class Grade {
     return "Grade{id=" + id
         + ", score=" + score
         + ", academicYear='" + academicYear + '\''
-        + ", moduleCode=" + (module != null ? module.getCode() : "null")
-        + ", studentId=" + (student != null ? student.getId() : "null")
-        + '}';
+        + ", moduleCode="
+        + (module != null ? module.getCode() : "null")
+        + ", studentId="
+        + (student != null ? student.getId() : "null") + '}';
   }
 }

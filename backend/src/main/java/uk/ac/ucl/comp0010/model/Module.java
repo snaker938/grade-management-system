@@ -5,38 +5,49 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-
 import uk.ac.ucl.comp0010.exception.NoGradeAvailableException;
 
 /**
- * Represents a student within the academic system, maintaining both personal
- * details and academic associations with modules and grades.
+ * Represents a module in the academic system, maintaining details
+ * such as its code, name, capacity (max seats), and whether it is
+ * mandatory non-condonable (MNC).
  *
  * Capabilities:
- * - Registering for one or more modules.
- * - Holding multiple grades, each tied to a specific module and academic year.
- * - Retrieving a specific grade from a registered module, if one exists.
- * - Computing the overall average grade across all recorded modules.
+ * - Holding multiple grades associated with students who have taken it.
+ * - Holding multiple registrations for students enrolled in it.
+ * - Computing an average grade from a given list of grades.
  *
  * Exceptions:
- * - NoRegistrationException: Thrown when trying to add or access a grade for a
- * module that the student is not registered in.
- * - NoGradeAvailableException: Thrown when attempting to fetch or compute an
- * average grade if no grades are recorded.
+ * - NoGradeAvailableException: Thrown when attempting to compute the average
+ * grade if no grades are provided.
  */
-
 @Entity
-public class Module {
+public final class Module {
 
+  /** The unique code of this module (e.g., "COM0001"). */
   @Id
   private String code;
+
+  /** The name of the module (e.g., "Software Engineering"). */
   private String name;
+
+  /** Indicates if the module is mandatory non-condonable (MNC). */
   private boolean mnc;
+
+  /** The maximum number of seats available in this module. */
   private int maxSeats;
 
+  /**
+   * The list of grades associated with this module.
+   * Each Grade corresponds to a student's score in this module.
+   */
   @OneToMany(mappedBy = "module")
   private List<Grade> grades = new ArrayList<>();
 
+  /**
+   * The list of registrations associated with this module.
+   * Each Registration corresponds to a student enrolled in this module.
+   */
   @OneToMany(mappedBy = "module")
   private List<Registration> registrations = new ArrayList<>();
 
@@ -52,10 +63,10 @@ public class Module {
   /**
    * Sets the unique code of this module.
    *
-   * @param code the new module code
+   * @param newCode the new module code
    */
-  public void setCode(String code) {
-    this.code = code;
+  public void setCode(final String newCode) {
+    this.code = newCode;
   }
 
   /**
@@ -70,14 +81,14 @@ public class Module {
   /**
    * Sets the name of this module.
    *
-   * @param name the new name for the module
+   * @param newName the new name for the module
    */
-  public void setName(String name) {
-    this.name = name;
+  public void setName(final String newName) {
+    this.name = newName;
   }
 
   /**
-   * Indicates whether this module is mandatory non-condonable (MNC).
+   * Indicates whether this module is MNC.
    *
    * @return true if the module is MNC, false otherwise
    */
@@ -86,12 +97,12 @@ public class Module {
   }
 
   /**
-   * Sets whether this module is mandatory non-condonable (MNC).
+   * Sets whether this module is MNC.
    *
-   * @param mnc true if the module is MNC, false otherwise
+   * @param newMnc true if the module is MNC, false otherwise
    */
-  public void setMnc(boolean mnc) {
-    this.mnc = mnc;
+  public void setMnc(final boolean newMnc) {
+    this.mnc = newMnc;
   }
 
   /**
@@ -106,10 +117,10 @@ public class Module {
   /**
    * Sets the list of grades associated with this module.
    *
-   * @param grades a list of Grade objects
+   * @param newGrades a list of Grade objects
    */
-  public void setGrades(List<Grade> grades) {
-    this.grades = grades;
+  public void setGrades(final List<Grade> newGrades) {
+    this.grades = newGrades;
   }
 
   /**
@@ -124,26 +135,27 @@ public class Module {
   /**
    * Sets the list of registrations associated with this module.
    *
-   * @param registrations a list of Registration objects
+   * @param newRegistrations a list of Registration objects
    */
-  public void setRegistrations(List<Registration> registrations) {
-    this.registrations = registrations;
+  public void setRegistrations(final List<Registration> newRegistrations) {
+    this.registrations = newRegistrations;
   }
 
   /**
    * Computes the average grade from a list of grades for this module.
-   * 
-   * @param grades the list of grades to compute the average from
+   *
+   * @param newGrades the list of grades to compute the average from
    * @return the computed average as a float
    * @throws NoGradeAvailableException if the provided list is null or empty
    */
-  public float computeAverageGrade(List<Grade> grades) throws NoGradeAvailableException {
-    if (grades == null || grades.isEmpty()) {
-      throw new NoGradeAvailableException("No grades available for this module");
+  public float computeAverageGrade(final List<Grade> newGrades)
+      throws NoGradeAvailableException {
+    if (newGrades == null || newGrades.isEmpty()) {
+      throw new NoGradeAvailableException(
+        "No grades available for this module");
     }
-
-    int sum = grades.stream().mapToInt(Grade::getScore).sum();
-    return (float) sum / grades.size();
+    int sum = newGrades.stream().mapToInt(Grade::getScore).sum();
+    return (float) sum / newGrades.size();
   }
 
   /**
@@ -158,16 +170,17 @@ public class Module {
   /**
    * Sets the maximum number of seats available for the module.
    *
-   * @param maxSeats the maximum number of seats to set
+   * @param newMaxSeats the maximum number of seats to set
    */
-  public void setMaxSeats(int maxSeats) {
-    this.maxSeats = maxSeats;
+  public void setMaxSeats(final int newMaxSeats) {
+    this.maxSeats = newMaxSeats;
   }
 
   /**
    * Returns the number of students currently enrolled in the module.
    *
-   * @return the number of enrolled students, or 0 if there are no registrations.
+   * @return the number of enrolled students,
+   * or 0 if there are no registrations.
    */
   public int getEnrolledCount() {
     return registrations != null ? registrations.size() : 0;
@@ -185,7 +198,8 @@ public class Module {
         + ", name='" + name + '\''
         + ", mnc=" + mnc
         + ", gradesCount=" + (grades != null ? grades.size() : 0)
-        + ", registrationsCount=" + (registrations != null ? registrations.size() : 0)
+        + ", registrationsCount="
+        + (registrations != null ? registrations.size() : 0)
         + '}';
   }
 }

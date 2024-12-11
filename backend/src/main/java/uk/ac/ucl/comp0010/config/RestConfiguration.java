@@ -16,13 +16,15 @@ import uk.ac.ucl.comp0010.model.Student;
 public class RestConfiguration implements RepositoryRestConfigurer {
 
   /**
-   * Exposes the IDs of Student, Module, and Grade entities in the REST responses.
-   * 
+   * Exposes the IDs of Student, Module, and Grade entities in the REST
+   * responses.
+   *
    * @param config the RepositoryRestConfiguration to modify
    * @param cors   the CorsRegistry for additional CORS mappings if needed
    */
   @Override
-  public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+  public void configureRepositoryRestConfiguration(
+      final RepositoryRestConfiguration config, final CorsRegistry cors) {
     config.exposeIdsFor(Student.class, Module.class, Grade.class);
   }
 }

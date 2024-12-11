@@ -2,11 +2,13 @@ package uk.ac.ucl.comp0010.controller;
 
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ucl.comp0010.model.Grade;
 import uk.ac.ucl.comp0010.model.Module;
 import uk.ac.ucl.comp0010.model.Student;
@@ -19,47 +21,52 @@ import uk.ac.ucl.comp0010.repository.StudentRepository;
  * Provides endpoints for adding and updating a Grade.
  */
 @RestController
-public class GradeController {
+public final class GradeController {
 
+  /** Repository for Student entities. */
   private final StudentRepository studentRepository;
+  /** Repository for Module entities. */
   private final ModuleRepository moduleRepository;
+  /** Repository for Grade entities. */
   private final GradeRepository gradeRepository;
 
   /**
    * Constructs a GradeController with the required repositories.
    *
-   * @param studentRepository the repository for Student entities
-   * @param moduleRepository  the repository for Module entities
-   * @param gradeRepository   the repository for Grade entities
+   * @param studentRepo the repository for Student entities
+   * @param moduleRepo  the repository for Module entities
+   * @param gradeRepo   the repository for Grade entities
    */
-  public GradeController(StudentRepository studentRepository,
-      ModuleRepository moduleRepository,
-      GradeRepository gradeRepository) {
-    this.studentRepository = studentRepository;
-    this.moduleRepository = moduleRepository;
-    this.gradeRepository = gradeRepository;
+  public GradeController(final StudentRepository studentRepo,
+      final ModuleRepository moduleRepo, final GradeRepository gradeRepo) {
+    this.studentRepository = studentRepo;
+    this.moduleRepository = moduleRepo;
+    this.gradeRepository = gradeRepo;
   }
 
   /**
    * Adds a new Grade based on the provided parameters.
-   * Expects "student_id", "module_code", "score", and "academic_year" in the
-   * request body.
-   * Ensures the student is registered in the module before adding the grade.
+   * Expects "student_id", "module_code", "score", and
+   * "academic_year" in the request body. Ensures the student is
+   * registered in the module before adding the grade.
    *
    * @param params a map of parameter names to values:
-   *               "student_id", "module_code", "score", "academic_year"
+   *               "student_id", "module_code", "score",
+   *               "academic_year"
    * @return a ResponseEntity containing the saved Grade if successful,
-   *         BAD_REQUEST if parameters are missing or the student is not enrolled,
-   *         NOT_FOUND if the student or module does not exist.
+   *         BAD_REQUEST if parameters are missing or the student is
+   *         not enrolled, NOT_FOUND if the student or module does not exist.
    */
   @PostMapping("/grades/addGrade")
-  public ResponseEntity<Grade> addGrade(@RequestBody Map<String, String> params) {
+  public ResponseEntity<Grade> addGrade(
+      @RequestBody final Map<String, String> params) {
     String studentIdStr = params.get("student_id");
     String moduleCode = params.get("module_code");
     String scoreStr = params.get("score");
     String academicYear = params.get("academic_year");
 
-    if (studentIdStr == null || moduleCode == null || scoreStr == null || academicYear == null) {
+    if (studentIdStr == null || moduleCode == null
+        || scoreStr == null || academicYear == null) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
@@ -78,7 +85,8 @@ public class GradeController {
     Module module = moduleOpt.get();
 
     boolean registered = student.getRegistrations().stream()
-        .anyMatch(r -> r.getModule().getCode().equals(module.getCode()));
+        .anyMatch(r -> r.getModule().getCode()
+            .equals(module.getCode()));
 
     if (!registered) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -103,11 +111,13 @@ public class GradeController {
    * @param id     the ID of the grade to update
    * @param params a map of parameters that may include "score" and/or
    *               "academic_year"
-   * @return a ResponseEntity containing the updated Grade, or NOT_FOUND if no
-   *         such Grade exists.
+   * @return a ResponseEntity containing the updated Grade, or NOT_FOUND
+   *         if no such Grade exists.
    */
   @PutMapping("/grades/{id}")
-  public ResponseEntity<Grade> updateGrade(@PathVariable Long id, @RequestBody Map<String, String> params) {
+  public ResponseEntity<Grade> updateGrade(
+      @PathVariable final Long id,
+      @RequestBody final Map<String, String> params) {
     Optional<Grade> gradeOpt = gradeRepository.findById(id);
     if (!gradeOpt.isPresent()) {
       return ResponseEntity.notFound().build();
