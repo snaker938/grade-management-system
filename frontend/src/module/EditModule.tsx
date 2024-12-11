@@ -14,29 +14,34 @@ import {
 import { EntityModelModule } from '../api/entityModelModule';
 import { API_ENDPOINT } from '../config';
 
-function AddModule(props: {
+function EditModule(props: {
   open: boolean;
   onClose: () => void;
   update: () => void;
+  module: EntityModelModule;
 }) {
-  const [module, setModule] = React.useState<EntityModelModule>({});
+  const [module, setModule] = React.useState<EntityModelModule>(props.module);
   const [error, setError] = React.useState<string>();
 
-  function request() {
-    axios
-      .post(`${API_ENDPOINT}/modules`, module)
-      .then(() => {
-        props.update();
-        props.onClose();
-      })
-      .catch((response) => {
-        setError(response.message);
-      });
+  React.useEffect(() => {
+    setModule(props.module);
+  }, [props.module]);
+
+  function saveChanges() {
+    if (module.code) {
+      axios
+        .put(`${API_ENDPOINT}/modules/${module.code}`, module)
+        .then(() => {
+          props.update();
+          props.onClose();
+        })
+        .catch((res) => setError(res.message));
+    }
   }
 
   return (
     <Dialog open={props.open} onClose={props.onClose}>
-      <DialogTitle>Add New Module</DialogTitle>
+      <DialogTitle>Edit Module</DialogTitle>
       <DialogContent>
         {error && (
           <Alert severity="error" sx={{ marginBottom: '20px' }}>
@@ -47,19 +52,19 @@ function AddModule(props: {
           fullWidth
           variant="outlined"
           label="Module Code"
+          value={module.code ?? ''}
+          disabled
           sx={{ marginBottom: '20px' }}
-          onChange={(e) => {
-            setModule({ ...module, code: e.target.value.toUpperCase() });
-          }}
         />
         <TextField
           fullWidth
           variant="outlined"
           label="Module Name"
-          sx={{ marginBottom: '20px' }}
+          value={module.name ?? ''}
           onChange={(e) => {
             setModule({ ...module, name: e.target.value });
           }}
+          sx={{ marginBottom: '20px' }}
         />
         <FormControlLabel
           control={
@@ -75,12 +80,12 @@ function AddModule(props: {
       </DialogContent>
       <DialogActions>
         <Button onClick={props.onClose}>Cancel</Button>
-        <Button onClick={request} variant="contained">
-          Add
+        <Button onClick={saveChanges} variant="contained">
+          Save
         </Button>
       </DialogActions>
     </Dialog>
   );
 }
 
-export default AddModule;
+export default EditModule;

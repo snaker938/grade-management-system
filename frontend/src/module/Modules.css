@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.modules-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 120px;
+  box-sizing: border-box;
+}
+
+.modules-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+}
+
+.modules-title {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modules-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.search-field {
+  flex: 1;
+}
+.action-button {
+  background: #7a5ce9;
+  color: #fff;
+  text-transform: none;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modules-header-row {
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  color: #333;
+}
+.module-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  align-items: center;
+}
+.action-column {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.icon-btn {
+  color: #555;
+  transition: color 0.2s ease;
+}
+.icon-btn:hover {
+  color: #000;
+}

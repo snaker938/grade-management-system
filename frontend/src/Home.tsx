@@ -13,28 +13,12 @@ import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import GradingIcon from '@mui/icons-material/Grading';
 import './Home.css';
+import Navbar from './components/Navbar';
 
 function Home() {
   return (
     <Box className="home-root">
-      {/* Custom Navbar */}
-      <header className="navbar">
-        <div className="navbar-content">
-          <div className="navbar-title">Awesome University</div>
-          <nav className="navbar-links">
-            <a href="/modules" className="nav-link">
-              Modules
-            </a>
-            <a href="/students" className="nav-link">
-              Students
-            </a>
-            <a href="/grades" className="nav-link">
-              Grades
-            </a>
-          </nav>
-        </div>
-      </header>
-
+      <Navbar currentPage="home" />
       <Container maxWidth="sm" className="main-card-container">
         <Card className="main-card" elevation={2}>
           <CardContent>
