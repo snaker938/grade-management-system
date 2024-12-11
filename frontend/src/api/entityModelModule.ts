@@ -11,4 +11,6 @@ export interface EntityModelModule {
   code?: string;
   mnc?: boolean;
   name?: string;
+  maxSeats?: number;
+  enrolledCount?: number;
 }

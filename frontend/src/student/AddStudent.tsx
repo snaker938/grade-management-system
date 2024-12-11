@@ -1,10 +1,10 @@
-import React from "react";
-import axios from "axios";
-import { Paper, TextField, Button, Typography, Alert } from "@mui/material";
-import { EntityModelStudent } from "../api/entityModelStudent.ts";
-import { API_ENDPOINT } from "../config";
+import React from 'react';
+import axios from 'axios';
+import { Paper, TextField, Button, Typography, Alert } from '@mui/material';
+import { EntityModelStudent } from '../api/entityModelStudent.ts';
+import { API_ENDPOINT } from '../config';
 
-function AddStudent(props: { update: Function }) {
+function AddStudent(props: { update: () => void }) {
   const [student, setStudent] = React.useState<EntityModelStudent>({});
   const [error, setError] = React.useState<string>();
 
@@ -20,7 +20,7 @@ function AddStudent(props: { update: Function }) {
   }
 
   return (
-    <Paper sx={{ padding: "30px" }}>
+    <Paper sx={{ padding: '30px' }}>
       <Typography variant="h5">Add/Update Student</Typography>
       <br />
       <TextField

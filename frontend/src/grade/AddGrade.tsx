@@ -1,5 +1,5 @@
-import React from "react";
-import axios from "axios";
+import React from 'react';
+import axios from 'axios';
 import {
   Paper,
   Button,
@@ -8,20 +8,25 @@ import {
   MenuItem,
   TextField,
   Alert,
-} from "@mui/material";
+} from '@mui/material';
 import {
   AddGradeBody,
   EntityModelStudent,
   EntityModelModule,
-} from "../api/index";
-import { API_ENDPOINT } from "../config";
+} from '../api/index';
+import { API_ENDPOINT } from '../config';
 
-function AddGrade(props: { update: Function }) {
+function AddGrade(props: { update: () => void }) {
+  // State to hold the grade data
   const [grade, setGrade] = React.useState<AddGradeBody>({});
+  // State to hold the list of students
   const [students, setStudents] = React.useState<EntityModelStudent[]>([]);
+  // State to hold the list of modules
   const [modules, setModules] = React.useState<EntityModelModule[]>();
+  // State to hold any error messages
   const [error, setError] = React.useState<string>();
 
+  // Fetch students and modules when the component mounts
   React.useEffect(() => {
     axios
       .get(`${API_ENDPOINT}/students`)
@@ -36,6 +41,7 @@ function AddGrade(props: { update: Function }) {
       .catch((response) => setError(response.message));
   }, []);
 
+  // Function to handle the request to add a grade
   function request() {
     axios
       .post(`${API_ENDPOINT}/grades/addGrade`, grade)
@@ -48,13 +54,14 @@ function AddGrade(props: { update: Function }) {
   }
 
   return (
-    <Paper sx={{ padding: "30px" }}>
+    <Paper sx={{ padding: '30px' }}>
       <Typography variant="h5">Add Grade</Typography>
       <br />
       <br />
+      {/* Select input for choosing a student */}
       <Select
-        sx={{ minWidth: "300px" }}
-        value={grade.student_id ?? ""}
+        sx={{ minWidth: '300px' }}
+        value={grade.student_id ?? ''}
         onChange={(e) => setGrade({ ...grade, student_id: e.target.value })}
         label="Student"
       >
@@ -68,9 +75,10 @@ function AddGrade(props: { update: Function }) {
             );
           })}
       </Select>
+      {/* Select input for choosing a module */}
       <Select
-        sx={{ minWidth: "300px" }}
-        value={grade.module_code ?? ""}
+        sx={{ minWidth: '300px' }}
+        value={grade.module_code ?? ''}
         onChange={(e) => setGrade({ ...grade, module_code: e.target.value })}
         label="Module"
       >
@@ -84,6 +92,7 @@ function AddGrade(props: { update: Function }) {
             );
           })}
       </Select>
+      {/* TextField input for entering the score */}
       <TextField
         label="Score"
         value={grade.score ?? 0}
@@ -91,9 +100,11 @@ function AddGrade(props: { update: Function }) {
       />
       <br />
       <br />
+      {/* Button to submit the grade */}
       <Button onClick={request}>Add</Button>
       <br />
       <br />
+      {/* Display error message if any */}
       {error && <Alert color="error">{error}</Alert>}
     </Paper>
   );
