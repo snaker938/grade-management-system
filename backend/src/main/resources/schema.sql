@@ -14,7 +14,8 @@ CREATE TABLE student(
 CREATE TABLE module(
   code VARCHAR(10) PRIMARY KEY,
   name VARCHAR(100),
-  mnc BOOLEAN
+  mnc BOOLEAN,
+  maxSeats INT
 );
 
 CREATE TABLE grade(

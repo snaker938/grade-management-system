@@ -32,6 +32,7 @@ public class Module {
   private String code;
   private String name;
   private boolean mnc;
+  private int maxSeats;
 
   @OneToMany(mappedBy = "module")
   private List<Grade> grades = new ArrayList<>();
@@ -143,6 +144,33 @@ public class Module {
 
     int sum = grades.stream().mapToInt(Grade::getScore).sum();
     return (float) sum / grades.size();
+  }
+
+  /**
+   * Returns the maximum number of seats available in the module.
+   *
+   * @return the maximum number of seats
+   */
+  public int getMaxSeats() {
+    return maxSeats;
+  }
+
+  /**
+   * Sets the maximum number of seats available for the module.
+   *
+   * @param maxSeats the maximum number of seats to set
+   */
+  public void setMaxSeats(int maxSeats) {
+    this.maxSeats = maxSeats;
+  }
+
+  /**
+   * Returns the number of students currently enrolled in the module.
+   *
+   * @return the number of enrolled students, or 0 if there are no registrations.
+   */
+  public int getEnrolledCount() {
+    return registrations != null ? registrations.size() : 0;
   }
 
   /**
