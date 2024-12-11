@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Paper, TextField, Button, Typography, Alert } from '@mui/material';
-import { EntityModelStudent } from '../api/entityModelStudent.ts';
+import { EntityModelStudent } from '../api/entityModelStudent';
 import { API_ENDPOINT } from '../config';
 
 function AddStudent(props: { update: () => void }) {
@@ -13,6 +13,8 @@ function AddStudent(props: { update: () => void }) {
       .post(`${API_ENDPOINT}/students`, student)
       .then(() => {
         props.update();
+        // Optionally clear the fields after a successful addition
+        setStudent({});
       })
       .catch((response) => {
         setError(response.message);
@@ -28,12 +30,14 @@ function AddStudent(props: { update: () => void }) {
         onChange={(e) => {
           setStudent({ ...student, id: Number(e.target.value) });
         }}
+        sx={{ marginRight: '10px' }}
       />
       <TextField
         label="Username"
         onChange={(e) => {
           setStudent({ ...student, username: e.target.value });
         }}
+        sx={{ marginRight: '10px' }}
       />
       <TextField
         label="email"
@@ -48,6 +52,7 @@ function AddStudent(props: { update: () => void }) {
         onChange={(e) => {
           setStudent({ ...student, firstName: e.target.value });
         }}
+        sx={{ marginRight: '10px' }}
       />
       <TextField
         label="Last Name"
@@ -57,10 +62,12 @@ function AddStudent(props: { update: () => void }) {
       />
       <br />
       <br />
-      <Button onClick={request}>Add/Update</Button>
+      <Button variant="contained" onClick={request}>
+        Add/Update
+      </Button>
       <br />
       <br />
-      {error && <Alert color="error">{error}</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
     </Paper>
   );
 }
