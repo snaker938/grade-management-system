@@ -204,20 +204,17 @@ public final class Student {
         .filter(g -> g.getModule().getCode().equals(newModule.getCode()))
         .findFirst()
         .orElseThrow(() -> new NoGradeAvailableException("No grade available"));
+
   }
 
-
   /**
- * Returns the list of grades associated with this student.
- *
- * @return a list of Grade objects related to this student
- */
+   * Returns the list of grades associated with this student.
+   *
+   * @return a list of Grade objects related to this student
+   */
   public List<Grade> getGrades() {
     return grades;
   }
-
-
-
 
   /**
    * Computes the average of all recorded grades for this student.
